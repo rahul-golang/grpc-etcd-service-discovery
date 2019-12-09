@@ -2,29 +2,29 @@
 grpc-etcd-service-discovery
 
 
-#etcd Setup
+# etcd Setup
 
-##Install etcd on Ubuntu 18.04 / Ubuntu 16.04
+## Install etcd on Ubuntu 18.04 / Ubuntu 16.04
 
-*Download the latest release of etcd on Ubuntu 18.04 / Ubuntu 16.04:
+* Download the latest release of etcd on Ubuntu 18.04 / Ubuntu 16.04:
 
           sudo apt -y install wget
           export RELEASE="3.3.13"
           wget https://github.com/etcd-io/etcd/releases/download/v${RELEASE}/etcd-v${RELEASE}-linux-amd64.tar.gz
  
-*Extract downloaded archive file.
+* Extract downloaded archive file.
 
           tar xvf etcd-v${RELEASE}-linux-amd64.tar.gz
          
-*Change to new file directory
+* Change to new file directory
 
           cd etcd-v${RELEASE}-linux-amd64
           
-*Move etcd and etcdctl binary files to /usr/local/bin directory.
+* Move etcd and etcdctl binary files to /usr/local/bin directory.
 
           sudo mv etcd etcdctl /usr/local/bin
           
-*Confirm version
+* Confirm version
 
           $ etcd --version
            etcd Version: 3.3.13
@@ -33,23 +33,23 @@ grpc-etcd-service-discovery
            Go OS/Arch: linux/amd64
            
            
-*Create Etcd configuration file and data directory
+* Create Etcd configuration file and data directory
 
           sudo mkdir -p /var/lib/etcd/
           sudo mkdir /etc/etcd
           
-*Create etcd system user
+* Create etcd system user
 
           sudo groupadd --system etcd
           sudo useradd -s /sbin/nologin --system -g etcd etcd
           
-*Set /var/lib/etcd/ directory ownership to etcd user.
+* Set /var/lib/etcd/ directory ownership to etcd user.
           
           sudo chown -R etcd:etcd /var/lib/etcd/
           
-*Configure Systemd and start etcd service
+* Configure Systemd and start etcd service
 
-*Create a new systemd service file for etcd.
+* Create a new systemd service file for etcd.
 
           sudo vim /etc/systemd/system/etcd.service
           
@@ -73,12 +73,12 @@ grpc-etcd-service-discovery
           [Install]
           WantedBy=multi-user.target
           
-*Reload systemd service and start etcd on Ubuntu 18,04 / Ubuntu 16,04
+* Reload systemd service and start etcd on Ubuntu 18,04 / Ubuntu 16,04
 
           sudo systemctl  daemon-reload
           sudo systemctl  start etcd.service
           
-*Check service status:
+* Check service status:
 
           $ sudo systemctl  status etcd.service
            ● etcd.service - etcd key-value store
@@ -100,7 +100,7 @@ grpc-etcd-service-discovery
            Ama 05 00:54:20 mynix systemd[1]: Started etcd key-value store.
            Ama 05 00:54:20 mynix etcd[8792]: serving insecure client requests on 127.0.0.1:2379, this is strongly discouraged!
 
-*The service will start on localhost address port 2379
+* The service will start on localhost address port 2379
 
          $ ss -tunelp | grep 2379
          tcp   LISTEN 0 128 127.0.0.1:2379 0.0.0.0:*  uid:998 ino:72981 sk:45c <-> 
